@@ -25,7 +25,7 @@ jobs:
           # Example: A link to kernel headers for a specific Raspberry Pi OS version.
           # Check https://github.com/raspberrypi/firmware/tree/master/modules/<YOUR_KERNEL_VERSION>
           KERNEL_VERSION="6.12.41+" # Replace with your kernel version
-          KERNEL_URL="https://github.com/raspberrypi/firmware/raw/master/modules/${KERNEL_VERSION}/build.tar.gz"
+          KERNEL_URL="https://github.com/raspberrypi/linux/archive/refs/tags/stable_20250702.zip"
           
           mkdir kernel_headers
           wget -O kernel_headers.tar.gz $KERNEL_URL
