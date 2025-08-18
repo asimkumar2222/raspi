@@ -1,0 +1,44 @@
+name: Build Raspberry Pi Driver
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install cross-compilation toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-arm-linux-gnueabihf
+
+      - name: Download Raspberry Pi Kernel Headers
+        run: |
+          # The URL for the kernel headers depends on the specific Pi model and OS version.
+          # You will need to find the correct one for your target Pi.
+          # Example: A link to kernel headers for a specific Raspberry Pi OS version.
+          # Check https://github.com/raspberrypi/firmware/tree/master/modules/<YOUR_KERNEL_VERSION>
+          KERNEL_VERSION="5.10.103-v7l+" # Replace with your kernel version
+          KERNEL_URL="https://github.com/raspberrypi/firmware/raw/master/modules/${KERNEL_VERSION}/build.tar.gz"
+          
+          mkdir kernel_headers
+          wget -O kernel_headers.tar.gz $KERNEL_URL
+          tar -xzf kernel_headers.tar.gz -C kernel_headers
+
+      - name: Configure and compile the driver
+        run: |
+          # This assumes your Makefile is set up for cross-compilation.
+          # Example Makefile line: CROSS_COMPILE = arm-linux-gnueabihf-
+          make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KERNEL_HEADERS_PATH=$(pwd)/kernel_headers
+
+      - name: Archive and upload the built module
+        uses: actions/upload-artifact@v4
+        with:
+          name: raspberry-pi-driver
+          path: your_driver.ko
