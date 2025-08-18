@@ -24,7 +24,7 @@ jobs:
           # You will need to find the correct one for your target Pi.
           # Example: A link to kernel headers for a specific Raspberry Pi OS version.
           # Check https://github.com/raspberrypi/firmware/tree/master/modules/<YOUR_KERNEL_VERSION>
-          KERNEL_VERSION="5.10.103-v7l+" # Replace with your kernel version
+          KERNEL_VERSION="6.12.41+" # Replace with your kernel version
           KERNEL_URL="https://github.com/raspberrypi/firmware/raw/master/modules/${KERNEL_VERSION}/build.tar.gz"
           
           mkdir kernel_headers
